@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ViewModelEx</string>
+    <!-- 타이틀 -->
+    <string name="workouts_title">운동시작</string>
+    <string name="exercises_title">종목</string>
+    <string name="logs_title">기록</string>
+    <string name="explore_title">통계</string>
+    <string name="settings_title">셋팅</string>
+
+    <!-- workouts_string -->
+    <string name="workout_start">빠른 시작</string>
+    <string name="workout_btn1">프로그램 시작</string>
+    <string name="workout_btn2">종목 추가</string>
+    <string name="workout_btn3">운동 종료</string>
+
+    <!-- exercieses_string -->
+    <string name="exer_search">검색</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
