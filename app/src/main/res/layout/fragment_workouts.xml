@@ -5,12 +5,12 @@
     android:id="@+id/frameLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_dark_background"
-    tools:context=".WorkoutsFragment" >
+    android:background="@color/fragmentBackGround"
+    tools:context=".WorkoutsFragment">
 
     <TextView
-        style="@style/CustomTextView"
         android:id="@+id/textView"
+        style="@style/CustomTextView"
         android:layout_width="100dp"
         android:layout_height="31dp"
         android:layout_marginStart="16dp"
@@ -31,7 +31,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="16dp"
-        android:background="#4F63DD"
+        android:background="@color/workOutBtn"
         android:text="@string/workout_btn1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView"
@@ -44,6 +44,7 @@
         android:layout_marginStart="110dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="101dp"
+        android:background="@color/workOutBtn"
         android:text="@string/workout_btn2"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +57,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
+        android:background="@color/workOutBtn"
         android:text="@string/workout_btn3"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/button"
@@ -67,9 +69,10 @@
         android:id="@+id/workList"
         android:layout_width="409dp"
         android:layout_height="85dp"
+        android:layout_marginTop="33dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="193dp" />
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

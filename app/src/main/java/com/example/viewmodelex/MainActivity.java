@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.viewmodelex.Explore.ExeploreFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 

@@ -5,14 +5,60 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_dark_background"
-    tools:context=".ExeploreFragment">
+    android:background="@color/fragmentBackGround"
+    tools:context=".Explore.ExeploreFragment">
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:id="@+id/weight_chart"
+        android:layout_width="384dp"
+        android:layout_height="609dp"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btn_week"
+        style="@style/CustomTextView"
+        android:layout_width="125dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/fragmentBtnBack"
+        android:text="@string/explo_week"
+        app:layout_constraintEnd_toStartOf="@+id/btn_month"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_month"
+        style="@style/CustomTextView"
+        android:layout_width="125dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/fragmentBtnBack"
+        android:text="@string/explo_month"
+        app:layout_constraintEnd_toStartOf="@+id/btn_alldays"
+        app:layout_constraintStart_toEndOf="@+id/btn_week"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_alldays"
+        style="@style/CustomTextView"
+        android:layout_width="125dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/fragmentBtnBack"
+        android:text="@string/explo_all"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_month"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

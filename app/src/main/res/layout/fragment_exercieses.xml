@@ -5,8 +5,8 @@
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_dark_background"
-    tools:context=".ExerciesesFragment" >
+    android:background="@color/fragmentBackGround"
+    tools:context=".ExerciesesFragment">
 
     <EditText
         android:id="@+id/editText"
