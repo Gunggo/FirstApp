@@ -134,7 +134,7 @@ public class ExeploreFragment extends Fragment {
         lineChart.setDoubleTapToZoomEnabled(false);
         lineChart.setDrawGridBackground(false);
         lineChart.setDescription(description);
-        lineChart.animateY(1000, Easing.EasingOption.EaseInCubic);
+        lineChart.animateY(500, Easing.EasingOption.EaseInCubic);
 
         return lineChart;
     }
@@ -238,6 +238,7 @@ public class ExeploreFragment extends Fragment {
                         if (lineChart.isEmpty()) {
                             lineChart.clear();
                         } else {
+                            lineChart.invalidate();
                             drawChart(lineChart);
                         }
                     }
@@ -269,5 +270,6 @@ public class ExeploreFragment extends Fragment {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+        getData();
     }
 }
