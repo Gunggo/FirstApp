@@ -22,7 +22,7 @@
     <string name="explo_month">최근 30일</string>
     <string name="explo_all">전체기간</string>
     <string name="explo_text1">몸무게(kg)</string>
-    <string name="explo_text2">근골격(kg)</string>
+    <string name="explo_text2">골격근(kg)</string>
     <string name="explo_text3">체지방(kg)</string>
     <string name="explo_saveBtn">저장하기</string>
     <string name="explo_editHint">입력</string>

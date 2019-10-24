@@ -55,9 +55,11 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
  * A simple {@link Fragment} subclass.
  */
 public class ExeploreFragment extends Fragment {
+    private static final String TAG = "lecture";
 
     private LineChart lineChart;
     private String[] mDate;
+    LineData lineData = null;
 
     FirebaseFirestore db;
 
@@ -77,7 +79,6 @@ public class ExeploreFragment extends Fragment {
         etMuscle = v.findViewById(R.id.etMuscle);
         etFat = v.findViewById(R.id.etFat);
         db = FirebaseFirestore.getInstance();
-        drawChart(lineChart);
 
 
         Button button = (Button) v.findViewById(R.id.weightSave);
@@ -88,19 +89,11 @@ public class ExeploreFragment extends Fragment {
             }
         });
 
+        getData();
         return v;
     }
 
     public LineChart drawChart(LineChart lineChart) {
-
-        LineData lineData = new LineData(getData());
-        if (lineChart.isEmpty()) {
-            lineChart.clear();
-        } else {
-            // set data
-            lineChart.setData(lineData);
-        }
-        lineChart.invalidate();
 
         // x축 설정
         XAxis xAxis = lineChart.getXAxis();
@@ -172,7 +165,7 @@ public class ExeploreFragment extends Fragment {
         return lineDataSet;
     }
 
-    public ArrayList<ILineDataSet> getData() {
+    public void getData() {
         // 서버에서 일단 가져온 후에도 서버에서 데이터가 변경되면
         // 폰의 화면에서도 실시간으로 자동 갱신 된다.
         int LIMIT = 30;
@@ -214,35 +207,41 @@ public class ExeploreFragment extends Fragment {
                             }
                         }
                         nMax = Integer.parseInt(sMax);
+
+                        LineDataSet weightDataSet = new LineDataSet(datavalue1, "몸무게");
+                        weightDataSet.setCircleColor(Color.RED);
+                        weightDataSet.setColor(Color.RED);
+                        weightDataSet.setCircleColorHole(Color.RED);
+
+                        LineDataSet fatDataSet = new LineDataSet(datavalue2, "체지방");
+                        fatDataSet.setCircleColor(Color.YELLOW);
+                        fatDataSet.setColor(Color.YELLOW);
+                        fatDataSet.setCircleColorHole(Color.YELLOW);
+
+                        LineDataSet muscleDataSet = new LineDataSet(datavalue3, "골격근");
+                        muscleDataSet.setCircleColor(Color.BLUE);
+                        muscleDataSet.setColor(Color.BLUE);
+                        muscleDataSet.setCircleColorHole(Color.BLUE);
+
+                        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
+                        chartSetting(weightDataSet);
+                        chartSetting(fatDataSet);
+                        chartSetting(muscleDataSet);
+
+                        dataSets.add(weightDataSet);
+                        dataSets.add(fatDataSet);
+                        dataSets.add(muscleDataSet);
+
+                        lineData = new LineData(dataSets);
+                        lineChart.setData(lineData);
+                        if (lineChart.isEmpty()) {
+                            lineChart.clear();
+                        } else {
+                            drawChart(lineChart);
+                        }
                     }
                 });
-
-        LineDataSet weightDataSet = new LineDataSet(datavalue1, "몸무게");
-        weightDataSet.setCircleColor(Color.RED);
-        weightDataSet.setColor(Color.RED);
-        weightDataSet.setCircleColorHole(Color.RED);
-
-        LineDataSet fatDataSet = new LineDataSet(datavalue2, "체지방");
-        fatDataSet.setCircleColor(Color.YELLOW);
-        fatDataSet.setColor(Color.YELLOW);
-        fatDataSet.setCircleColorHole(Color.YELLOW);
-
-        LineDataSet muscleDataSet = new LineDataSet(datavalue3, "제지방");
-        muscleDataSet.setCircleColor(Color.BLUE);
-        muscleDataSet.setColor(Color.BLUE);
-        muscleDataSet.setCircleColorHole(Color.BLUE);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
-        chartSetting(weightDataSet);
-        chartSetting(fatDataSet);
-        chartSetting(muscleDataSet);
-
-        dataSets.add(weightDataSet);
-        dataSets.add(fatDataSet);
-        dataSets.add(muscleDataSet);
-
-        return dataSets;
     }
 
     private void dataInsert() {
