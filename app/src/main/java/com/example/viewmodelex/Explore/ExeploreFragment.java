@@ -5,11 +5,16 @@ import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.viewmodelex.R;
 import com.github.mikephil.charting.animation.Easing;
@@ -21,14 +26,29 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
+import io.opencensus.internal.StringUtil;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 /**
@@ -37,14 +57,14 @@ import java.util.Locale;
 public class ExeploreFragment extends Fragment {
 
     private LineChart lineChart;
-    private LineChart lineChart2;
-    private LineChart lineChart3;
     private String[] mDate;
 
-    public ExeploreFragment() {
-        // Required empty public constructor
-    }
+    FirebaseFirestore db;
 
+    EditText etWeight;
+    EditText etMuscle;
+    EditText etFat;
+    int nMax = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,40 +73,41 @@ public class ExeploreFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_exeplore, container, false);
 
         lineChart = (LineChart) v.findViewById(R.id.weight_chart);
+        etWeight = v.findViewById(R.id.etWeight);
+        etMuscle = v.findViewById(R.id.etMuscle);
+        etFat = v.findViewById(R.id.etFat);
+        db = FirebaseFirestore.getInstance();
         drawChart(lineChart);
+
+
+        Button button = (Button) v.findViewById(R.id.weightSave);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataInsert();
+            }
+        });
 
         return v;
     }
 
     public LineChart drawChart(LineChart lineChart) {
-//        int[] weight = {0, 20, 40, 60, 80, 100, 120};
-//        lineChart.clear();
 
-
-        LineDataSet weightDataSet = new LineDataSet(weightGraph(), "몸무게");
-        LineDataSet fatDataSet = new LineDataSet(fatGraph(), "체지방");
-        LineDataSet muscleDataSet = new LineDataSet(muscleGraph(), "제지방");
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
-        resetChart(weightDataSet);
-        resetChart(fatDataSet);
-        resetChart(muscleDataSet);
-
-        dataSets.add(weightDataSet);
-        dataSets.add(fatDataSet);
-        dataSets.add(muscleDataSet);
-
-        LineData lineData = new LineData(dataSets);
-        lineChart.setData(lineData);
+        LineData lineData = new LineData(getData());
+        if (lineChart.isEmpty()) {
+            lineChart.clear();
+        } else {
+            // set data
+            lineChart.setData(lineData);
+        }
         lineChart.invalidate();
 
         // x축 설정
         XAxis xAxis = lineChart.getXAxis();
         mDate = getDate();
-        IAxisValueFormatter formatter = new IAxisValueFormatter() {
+        ValueFormatter formatter = new ValueFormatter() {
             @Override
-            public String getFormattedValue(float value, AxisBase axis) {
+            public String getAxisLabel(float value, AxisBase axis) {
                 return mDate[(int) value];
             }
         };
@@ -139,51 +160,9 @@ public class ExeploreFragment extends Fragment {
         return week;
     }
 
-    public ArrayList<Entry> weightGraph() {
-        final ArrayList<Entry> datavalue = new ArrayList<>();
-        datavalue.add(new Entry(0, 1f));
-        datavalue.add(new Entry(1, 2f));
-        datavalue.add(new Entry(2, 3f));
-        datavalue.add(new Entry(3, 4f));
-        datavalue.add(new Entry(4, 5f));
-        datavalue.add(new Entry(5, 6f));
-        datavalue.add(new Entry(6, 7f));
-
-        return datavalue;
-    }
-
-    public ArrayList<Entry> fatGraph() {
-        final ArrayList<Entry> datavalue = new ArrayList<>();
-        datavalue.add(new Entry(6, 7f));
-        datavalue.add(new Entry(5, 6f));
-        datavalue.add(new Entry(4, 5f));
-        datavalue.add(new Entry(3, 4f));
-        datavalue.add(new Entry(2, 3f));
-        datavalue.add(new Entry(1, 2f));
-        datavalue.add(new Entry(0, 1f));
-
-        return datavalue;
-    }
-
-    public ArrayList<Entry> muscleGraph() {
-        final ArrayList<Entry> datavalue = new ArrayList<>();
-        datavalue.add(new Entry(1, 1f));
-        datavalue.add(new Entry(3, 3f));
-        datavalue.add(new Entry(5, 5f));
-        datavalue.add(new Entry(7, 7f));
-        datavalue.add(new Entry(9, 5f));
-        datavalue.add(new Entry(11, 3f));
-        datavalue.add(new Entry(13, 1f));
-
-        return datavalue;
-    }
-
-    public LineDataSet resetChart(LineDataSet lineDataSet) {
+    public LineDataSet chartSetting(LineDataSet lineDataSet) {
         lineDataSet.setLineWidth(2);
         lineDataSet.setCircleRadius(6);
-        lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
-        lineDataSet.setCircleColorHole(Color.BLUE);
-        lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setDrawCircles(true);
         lineDataSet.setDrawHorizontalHighlightIndicator(false);
@@ -193,4 +172,103 @@ public class ExeploreFragment extends Fragment {
         return lineDataSet;
     }
 
+    public ArrayList<ILineDataSet> getData() {
+        // 서버에서 일단 가져온 후에도 서버에서 데이터가 변경되면
+        // 폰의 화면에서도 실시간으로 자동 갱신 된다.
+        int LIMIT = 30;
+        final ArrayList<Entry> datavalue1 = new ArrayList<>();
+        final ArrayList<Entry> datavalue2 = new ArrayList<>();
+        final ArrayList<Entry> datavalue3 = new ArrayList<>();
+
+        final ArrayList<String> weightValue = new ArrayList<>();
+        final ArrayList<String> muscleValue = new ArrayList<>();
+        final ArrayList<String> fatValue = new ArrayList<>();
+
+        db.collection("MyFirestoreDB")
+//                .orderBy("name", Query.Direction.DESCENDING)
+//                .limit(LIMIT)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.d(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        String sMax = "0";
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc.get("weight") != null) {
+                                sMax = doc.getId();
+                                weightValue.add(doc.getString("weight"));
+                                muscleValue.add(doc.getString("muscle"));
+                                fatValue.add(doc.getString("fat"));
+                                for (int i = Integer.parseInt(sMax); i <= weightValue.size(); i++) {
+                                    datavalue1.add(new Entry(i, Integer.parseInt(weightValue.get(i - 1))));
+                                }
+                                for (int i = Integer.parseInt(sMax); i <= muscleValue.size(); i++) {
+                                    datavalue2.add(new Entry(i, Integer.parseInt(muscleValue.get(i - 1))));
+                                }
+                                for (int i = Integer.parseInt(sMax); i <= fatValue.size(); i++) {
+                                    datavalue3.add(new Entry(i, Integer.parseInt(fatValue.get(i - 1))));
+                                }
+                            }
+                        }
+                        nMax = Integer.parseInt(sMax);
+                    }
+                });
+
+        LineDataSet weightDataSet = new LineDataSet(datavalue1, "몸무게");
+        weightDataSet.setCircleColor(Color.RED);
+        weightDataSet.setColor(Color.RED);
+        weightDataSet.setCircleColorHole(Color.RED);
+
+        LineDataSet fatDataSet = new LineDataSet(datavalue2, "체지방");
+        fatDataSet.setCircleColor(Color.YELLOW);
+        fatDataSet.setColor(Color.YELLOW);
+        fatDataSet.setCircleColorHole(Color.YELLOW);
+
+        LineDataSet muscleDataSet = new LineDataSet(datavalue3, "제지방");
+        muscleDataSet.setCircleColor(Color.BLUE);
+        muscleDataSet.setColor(Color.BLUE);
+        muscleDataSet.setCircleColorHole(Color.BLUE);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
+        chartSetting(weightDataSet);
+        chartSetting(fatDataSet);
+        chartSetting(muscleDataSet);
+
+        dataSets.add(weightDataSet);
+        dataSets.add(fatDataSet);
+        dataSets.add(muscleDataSet);
+
+        return dataSets;
+    }
+
+    private void dataInsert() {
+        Map<String, Object> quote = new HashMap<>();
+        quote.put("weight", etWeight.getText().toString());
+        quote.put("muscle", etMuscle.getText().toString());
+        quote.put("fat", etFat.getText().toString());
+
+        // Add a new document with a generated ID
+        String newCount = String.format("%03d", nMax + 1);
+
+        db.collection("MyFirestoreDB")
+                //.document()
+                .document(newCount)
+                .set(quote)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
 }

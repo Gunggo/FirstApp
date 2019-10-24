@@ -10,23 +10,23 @@
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/weight_chart"
-        android:layout_width="384dp"
-        android:layout_height="609dp"
-        android:layout_margin="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="378dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_week"
         style="@style/CustomTextView"
-        android:layout_width="125dp"
-        android:layout_height="45dp"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
         android:background="@color/fragmentBtnBack"
@@ -38,8 +38,8 @@
     <Button
         android:id="@+id/btn_month"
         style="@style/CustomTextView"
-        android:layout_width="125dp"
-        android:layout_height="45dp"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
         android:layout_marginTop="48dp"
         android:background="@color/fragmentBtnBack"
         android:text="@string/explo_month"
@@ -50,8 +50,8 @@
     <Button
         android:id="@+id/btn_alldays"
         style="@style/CustomTextView"
-        android:layout_width="125dp"
-        android:layout_height="45dp"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
         android:background="@color/fragmentBtnBack"
@@ -59,6 +59,95 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_month"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/CustomTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="@string/explo_text1"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/btn_week"
+        app:layout_constraintTop_toBottomOf="@+id/btn_week" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/CustomTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/explo_text2"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/CustomTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/explo_text3"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/etWeight"
+        style="@style/CustomEditText"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/explo_editHint"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_alldays" />
+
+    <EditText
+        android:id="@+id/etMuscle"
+        style="@style/CustomEditText"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/explo_editHint"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etWeight" />
+
+    <EditText
+        android:id="@+id/etFat"
+        style="@style/CustomEditText"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/explo_editHint"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etMuscle" />
+
+    <Button
+        android:id="@+id/weightSave"
+        style="@style/CustomTextView"
+        android:layout_width="88dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/fragmentBtnBack"
+        android:onClick="onBtn1Clicked"
+        android:text="@string/explo_saveBtn"
+        app:layout_constraintBottom_toTopOf="@+id/weight_chart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

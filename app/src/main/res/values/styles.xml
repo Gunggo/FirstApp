@@ -21,5 +21,16 @@
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">1</item>
     </style>
+    <!-- EditText 초기값 -->
+    <style name="CustomEditText">
+        <item name="android:colorAccent">#FFFFFF</item>
+        <item name="android:colorControlNormal">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <!-- 캘린더 뷰 스타일 -->
+<!--    <style name="CalendarViewThema">-->
+<!--        <item name="android:calendarTextColor">#90A4AE</item>-->
+<!--        <item name="android:colorAccent">#FFFF00</item>-->
+<!--    </style>-->
 
 </resources>

@@ -10,16 +10,20 @@
     <!-- workouts_string -->
     <string name="workout_start">빠른 시작</string>
     <string name="workout_btn1">프로그램 시작</string>
-    <string name="workout_btn2">종목 추가</string>
+    <string name="workout_btn2">루틴 추가</string>
     <string name="workout_btn3">운동 종료</string>
 
     <!-- exercieses_string -->
     <string name="exer_search">검색</string>
+    <string name="exer_add">새 운동 추가</string>
 
     <!-- explore_string -->
     <string name="explo_week">최근 7일</string>
     <string name="explo_month">최근 30일</string>
     <string name="explo_all">전체기간</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="explo_text1">몸무게(kg)</string>
+    <string name="explo_text2">근골격(kg)</string>
+    <string name="explo_text3">체지방(kg)</string>
+    <string name="explo_saveBtn">저장하기</string>
+    <string name="explo_editHint">입력</string>
 </resources>

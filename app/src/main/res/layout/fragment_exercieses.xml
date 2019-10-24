@@ -24,11 +24,23 @@
 
     <ListView
         android:id="@+id/exercisesList"
-        android:layout_width="409dp"
-        android:layout_height="606dp"
-        android:layout_marginTop="27dp"
+        android:layout_width="410dp"
+        android:layout_height="502dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/CustomTextView"
+        android:layout_width="375dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="25dp"
+        android:background="@color/workOutBtn"
+        android:text="@string/exer_add"
+        app:layout_constraintBottom_toTopOf="@+id/exercisesList"
+        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintStart_toStartOf="@+id/editText"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
