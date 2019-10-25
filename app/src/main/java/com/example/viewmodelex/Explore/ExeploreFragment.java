@@ -6,6 +6,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,13 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.viewmodelex.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -35,8 +35,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -45,10 +43,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-
-import io.opencensus.internal.StringUtil;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 /**
@@ -59,7 +53,10 @@ public class ExeploreFragment extends Fragment {
 
     private LineChart lineChart;
     private String[] mDate;
+    private int dateCheck = 0;
     LineData lineData = null;
+    private ArrayList<String> dayValue = new ArrayList<>();
+
 
     FirebaseFirestore db;
 
@@ -81,11 +78,38 @@ public class ExeploreFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
 
-        Button button = (Button) v.findViewById(R.id.weightSave);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button1 = (Button) v.findViewById(R.id.weightSave);
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dataInsert();
+            }
+        });
+
+        Button button2 = (Button) v.findViewById(R.id.btn_week);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateCheck = 0;
+                getData();
+            }
+        });
+
+        Button button3 = (Button) v.findViewById(R.id.btn_month);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateCheck = 1;
+                getData();
+            }
+        });
+
+        Button button4 = (Button) v.findViewById(R.id.btn_alldays);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateCheck = 2;
+                getData();
             }
         });
 
@@ -95,28 +119,24 @@ public class ExeploreFragment extends Fragment {
 
     public LineChart drawChart(LineChart lineChart) {
 
+        Legend legend = lineChart.getLegend();
+        legend.setTextColor(Color.WHITE);
+
         // x축 설정
         XAxis xAxis = lineChart.getXAxis();
-        mDate = getDate();
-        ValueFormatter formatter = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return mDate[(int) value];
-            }
-        };
+        xAxis.setValueFormatter(new GraphAxisValueFormatter(mDate)); // x축 label
         xAxis.setGranularity(1f);
-        xAxis.setValueFormatter(formatter);
-        xAxis.setLabelCount(6, true);
+        xAxis.setLabelCount(7, false); // 받아온 값을 몇개로 나눠서 보여줌 ?
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.enableGridDashedLine(8, 24, 0);
+        xAxis.enableGridDashedLine(8, 24, 0); // 힌트 그대로
 
         // y축 설정
         YAxis yLAxis = lineChart.getAxisLeft();
         yLAxis.setTextColor(Color.WHITE);
-        yLAxis.setAxisMaximum(100);
+        yLAxis.setAxisMaximum(130);
         yLAxis.setAxisMinimum(0);
-        yLAxis.setLabelCount(11);
+        yLAxis.setLabelCount(10, true);
 
         // y축 비활성화
         YAxis yRAxis = lineChart.getAxisRight();
@@ -139,20 +159,6 @@ public class ExeploreFragment extends Fragment {
         return lineChart;
     }
 
-    public String[] getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-
-        Calendar calendar = new GregorianCalendar(Locale.KOREA);
-        String[] week = new String[7];
-
-        for (int i = 0; i < 7; i++) {
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
-            week[i] = sdf.format(calendar.getTime());
-            System.out.println(week[i]);
-        }
-        return week;
-    }
-
     public LineDataSet chartSetting(LineDataSet lineDataSet) {
         lineDataSet.setLineWidth(2);
         lineDataSet.setCircleRadius(6);
@@ -169,9 +175,9 @@ public class ExeploreFragment extends Fragment {
         // 서버에서 일단 가져온 후에도 서버에서 데이터가 변경되면
         // 폰의 화면에서도 실시간으로 자동 갱신 된다.
         int LIMIT = 30;
-        final ArrayList<Entry> datavalue1 = new ArrayList<>();
-        final ArrayList<Entry> datavalue2 = new ArrayList<>();
-        final ArrayList<Entry> datavalue3 = new ArrayList<>();
+        final ArrayList<Entry> weightEntry = new ArrayList<>();
+        final ArrayList<Entry> muscleEntry = new ArrayList<>();
+        final ArrayList<Entry> fatEntry = new ArrayList<>();
 
         final ArrayList<String> weightValue = new ArrayList<>();
         final ArrayList<String> muscleValue = new ArrayList<>();
@@ -189,36 +195,50 @@ public class ExeploreFragment extends Fragment {
                         }
 
                         String sMax = "0";
+                        dayValue.clear();
                         for (QueryDocumentSnapshot doc : value) {
                             if (doc.get("weight") != null) {
-                                sMax = doc.getId();
+                                if (sMax == null) {
+                                    sMax = "0";
+                                } else {
+                                    sMax = doc.getString("num");
+                                }
                                 weightValue.add(doc.getString("weight"));
                                 muscleValue.add(doc.getString("muscle"));
                                 fatValue.add(doc.getString("fat"));
-                                for (int i = Integer.parseInt(sMax); i <= weightValue.size(); i++) {
-                                    datavalue1.add(new Entry(i, Integer.parseInt(weightValue.get(i - 1))));
-                                }
-                                for (int i = Integer.parseInt(sMax); i <= muscleValue.size(); i++) {
-                                    datavalue2.add(new Entry(i, Integer.parseInt(muscleValue.get(i - 1))));
-                                }
-                                for (int i = Integer.parseInt(sMax); i <= fatValue.size(); i++) {
-                                    datavalue3.add(new Entry(i, Integer.parseInt(fatValue.get(i - 1))));
-                                }
+                                dayValue.add(doc.getId().substring(0, doc.getId().lastIndexOf(" ")));
+                                int count = weightValue.size() - 1;
+//                                for (int i = weightValue.size() - 1; i < weightValue.size(); i++) {
+                                weightEntry.add(new Entry(count, Integer.parseInt(weightValue.get(count))));
+//                                }
+//                                for (int i = Integer.parseInt(sMax); i < muscleValue.size(); i++) {
+                                muscleEntry.add(new Entry(count, Integer.parseInt(muscleValue.get(count))));
+//                                }
+//                                for (int i = Integer.parseInt(sMax); i < fatValue.size(); i++) {
+                                fatEntry.add(new Entry(count, Integer.parseInt(fatValue.get(count))));
+//                                }
                             }
                         }
                         nMax = Integer.parseInt(sMax);
+                        if (dateCheck == 0) {
+                            mDate = getWeek();
+                        } else if (dateCheck == 1) {
+                            mDate = getMonth();
+                        } else if (dateCheck == 2) {
+                            mDate = getAll();
+                        }
 
-                        LineDataSet weightDataSet = new LineDataSet(datavalue1, "몸무게");
+                        LineDataSet weightDataSet = new LineDataSet(weightEntry, "몸무게");
                         weightDataSet.setCircleColor(Color.RED);
                         weightDataSet.setColor(Color.RED);
                         weightDataSet.setCircleColorHole(Color.RED);
 
-                        LineDataSet fatDataSet = new LineDataSet(datavalue2, "체지방");
+                        LineDataSet fatDataSet = new LineDataSet(muscleEntry, "체지방");
                         fatDataSet.setCircleColor(Color.YELLOW);
                         fatDataSet.setColor(Color.YELLOW);
                         fatDataSet.setCircleColorHole(Color.YELLOW);
 
-                        LineDataSet muscleDataSet = new LineDataSet(datavalue3, "골격근");
+                        LineDataSet muscleDataSet = new LineDataSet(fatEntry, "골격근");
                         muscleDataSet.setCircleColor(Color.BLUE);
                         muscleDataSet.setColor(Color.BLUE);
                         muscleDataSet.setCircleColorHole(Color.BLUE);
@@ -250,13 +270,13 @@ public class ExeploreFragment extends Fragment {
         quote.put("weight", etWeight.getText().toString());
         quote.put("muscle", etMuscle.getText().toString());
         quote.put("fat", etFat.getText().toString());
+        quote.put("num", String.format("%03d", nMax + 1));
+//        quote.put("date", getToday());
+//        String newCount = String.format("%03d", nMax + 1);
 
-        // Add a new document with a generated ID
-        String newCount = String.format("%03d", nMax + 1);
-
-        db.collection("MyFirestoreDB")
+        db.collection("MyFirestoreDB") // 나중에 컬렉션 이름을 회원 아이디로
                 //.document()
-                .document(newCount)
+                .document(getDay()) // 문서 이름은 각 날짜로
                 .set(quote)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -272,4 +292,49 @@ public class ExeploreFragment extends Fragment {
                 });
         getData();
     }
+
+
+    public String getDay() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM.dd HH:mm", Locale.KOREA);
+        Calendar calendar = new GregorianCalendar(Locale.KOREA);
+        return sdf.format(calendar.getTime());
+    }
+
+    public String[] getWeek() {
+        String[] week = new String[7];
+
+        for (int i = 0; i < dayValue.size(); i++) {
+            week[i] = dayValue.get(i);
+            if (i == 7) {
+                break;
+            }
+        }
+        return week;
+    }
+
+    public String[] getMonth() {
+        String[] week = new String[30];
+
+        for (int i = 0; i < dayValue.size(); i++) {
+            week[i] = dayValue.get(i);
+            if (i == 30) {
+                break;
+            }
+        }
+        return week;
+    }
+
+    public String[] getAll() {
+        String[] week = new String[300];
+
+        for (int i = 0; i < dayValue.size(); i++) {
+            week[i] = dayValue.get(i);
+            if (i == 30) {
+                break;
+            }
+        }
+        return week;
+    }
+
+
 }

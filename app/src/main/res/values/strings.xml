@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">ViewModelEx</string>
+    <!-- 애드몹 ID -->
+    <string name="ad_unit_id_1">ca-app-pub-9532486238287041/8416465319</string>
+    <!--    ca-app-pub-9532486238287041~5603551407-->
+
     <!-- 타이틀 -->
     <string name="workouts_title">운동시작</string>
     <string name="exercises_title">종목</string>
@@ -15,7 +19,14 @@
 
     <!-- exercieses_string -->
     <string name="exer_search">검색</string>
-    <string name="exer_add">새 운동 추가</string>
+    <string name="exer_addbtn">새 운동 추가</string>
+    <string name="dialog_head">새 운동 생성</string>
+    <string name="dialog_et1">이름 추가</string>
+    <string name="dialog_sel1">신체 부위</string>
+    <string name="dialog_sel2">카테고리</string>
+    <string name="dialog_sel1op">없음</string>
+    <string name="dialog_sel2op">없음</string>
+    <string name="dialog_btn1">Save</string>
 
     <!-- explore_string -->
     <string name="explo_week">최근 7일</string>
@@ -26,4 +37,7 @@
     <string name="explo_text3">체지방(kg)</string>
     <string name="explo_saveBtn">저장하기</string>
     <string name="explo_editHint">입력</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

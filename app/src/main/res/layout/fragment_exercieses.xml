@@ -6,14 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragmentBackGround"
-    tools:context=".ExerciesesFragment">
+    tools:context=".Exercieses.ExerciesesFragment">
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="375dp"
         android:layout_height="58dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
+        android:background="@drawable/search_bar"
         android:drawableLeft="@drawable/ic_search_black_24dp"
         android:ems="10"
         android:hint="@string/exer_search"
@@ -24,23 +25,23 @@
 
     <ListView
         android:id="@+id/exercisesList"
-        android:layout_width="410dp"
-        android:layout_height="502dp"
+        android:layout_width="404dp"
+        android:layout_height="407dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/addExer"
         style="@style/CustomTextView"
         android:layout_width="375dp"
         android:layout_height="58dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="18dp"
         android:background="@color/workOutBtn"
-        android:text="@string/exer_add"
-        app:layout_constraintBottom_toTopOf="@+id/exercisesList"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintStart_toStartOf="@+id/editText"
+        android:text="@string/exer_addbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

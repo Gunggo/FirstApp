@@ -6,4 +6,5 @@
     <color name="fragmentBackGround">#424242</color>
     <color name="fragmentBtnBack">#212121</color>
     <color name="workOutBtn">#29B6F6</color>
+    <color name="legendColor">#FFFFFF</color>
 </resources>

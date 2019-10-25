@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bodyaprt_arr">
+        <item> 없음</item>
+        <item>코어</item>
+        <item>팔</item>
+        <item>등</item>
+        <item>가슴</item>
+        <item>하체</item>
+        <item>어깨</item>
+        <item>기타</item>
+    </string-array>
+    <string-array name="catecory_arr">
+        <item> 없음</item>
+        <item>바벨</item>
+        <item>덤벨</item>
+        <item>머신</item>
+        <item>맨몸</item>
+        <item>기타</item>
+    </string-array>
+</resources>
