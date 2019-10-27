@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragmentBackGround"
+    android:scrollbarFadeDuration="0"
+    android:scrollbarSize="5dp"
     tools:context=".Exercieses.ExerciesesFragment">
 
     <EditText
@@ -23,10 +25,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercisesList"
-        android:layout_width="404dp"
-        android:layout_height="407dp"
+        android:layout_width="409dp"
+        android:layout_height="398dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -44,4 +46,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -136,7 +137,7 @@ public class ExeploreFragment extends Fragment {
         yLAxis.setTextColor(Color.WHITE);
         yLAxis.setAxisMaximum(130);
         yLAxis.setAxisMinimum(0);
-        yLAxis.setLabelCount(10, true);
+        yLAxis.setLabelCount(7, true);
 
         // y축 비활성화
         YAxis yRAxis = lineChart.getAxisRight();
@@ -161,7 +162,7 @@ public class ExeploreFragment extends Fragment {
 
     public LineDataSet chartSetting(LineDataSet lineDataSet) {
         lineDataSet.setLineWidth(2);
-        lineDataSet.setCircleRadius(6);
+        lineDataSet.setCircleRadius(3);
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setDrawCircles(true);
         lineDataSet.setDrawHorizontalHighlightIndicator(false);
@@ -194,32 +195,64 @@ public class ExeploreFragment extends Fragment {
                             return;
                         }
 
-                        String sMax = "0";
+//                        String sMax = "0";
                         dayValue.clear();
                         for (QueryDocumentSnapshot doc : value) {
                             if (doc.get("weight") != null) {
-                                if (sMax == null) {
-                                    sMax = "0";
-                                } else {
-                                    sMax = doc.getString("num");
-                                }
+//                                if (sMax == null) {
+//                                    sMax = "0";
+//                                } else {
+//                                    sMax = doc.getString("num");
+//                                }
                                 weightValue.add(doc.getString("weight"));
                                 muscleValue.add(doc.getString("muscle"));
                                 fatValue.add(doc.getString("fat"));
+
                                 dayValue.add(doc.getId().substring(0, doc.getId().lastIndexOf(" ")));
-                                int count = weightValue.size() - 1;
-//                                for (int i = weightValue.size() - 1; i < weightValue.size(); i++) {
-                                weightEntry.add(new Entry(count, Integer.parseInt(weightValue.get(count))));
-//                                }
-//                                for (int i = Integer.parseInt(sMax); i < muscleValue.size(); i++) {
-                                muscleEntry.add(new Entry(count, Integer.parseInt(muscleValue.get(count))));
-//                                }
-//                                for (int i = Integer.parseInt(sMax); i < fatValue.size(); i++) {
-                                fatEntry.add(new Entry(count, Integer.parseInt(fatValue.get(count))));
-//                                }
                             }
                         }
-                        nMax = Integer.parseInt(sMax);
+                        int count = 0;
+
+                        if (dateCheck == 0) { // 일주일치
+                            if (dayValue.size() <= 7) {
+                                for (int i = 0; i < dayValue.size(); i++) {
+                                    weightEntry.add(new Entry(i, Integer.parseInt(weightValue.get(i))));
+                                    muscleEntry.add(new Entry(i, Integer.parseInt(muscleValue.get(i))));
+                                    fatEntry.add(new Entry(i, Integer.parseInt(fatValue.get(i))));
+                                }
+                            }  else {
+                                count = dayValue.size() - 7;
+                                for (int i = 0; i < 7; i++) {
+                                    weightEntry.add(new Entry(i, Integer.parseInt(weightValue.get(count))));
+                                    muscleEntry.add(new Entry(i, Integer.parseInt(muscleValue.get(count))));
+                                    fatEntry.add(new Entry(i, Integer.parseInt(fatValue.get(count))));
+                                    count++;
+                                }
+                            }
+                        } else if (dateCheck == 1) { // 한달치
+                            if (dayValue.size() <= 30) {
+                                for (int i = 0; i < dayValue.size(); i++) {
+                                    weightEntry.add(new Entry(i, Integer.parseInt(weightValue.get(i))));
+                                    muscleEntry.add(new Entry(i, Integer.parseInt(muscleValue.get(i))));
+                                    fatEntry.add(new Entry(i, Integer.parseInt(fatValue.get(i))));
+                                }
+                            }  else {
+                                count = dayValue.size() - 30;
+                                for (int i = 0; i < 7; i++) {
+                                    weightEntry.add(new Entry(i, Integer.parseInt(weightValue.get(count))));
+                                    muscleEntry.add(new Entry(i, Integer.parseInt(muscleValue.get(count))));
+                                    fatEntry.add(new Entry(i, Integer.parseInt(fatValue.get(count))));
+                                    count++;
+                                }
+                            }
+                        } else if (dateCheck == 2) { // 싹다
+                            for (int i = 0; i < dayValue.size(); i++) {
+                                weightEntry.add(new Entry(i, Integer.parseInt(weightValue.get(i))));
+                                muscleEntry.add(new Entry(i, Integer.parseInt(muscleValue.get(i))));
+                                fatEntry.add(new Entry(i, Integer.parseInt(fatValue.get(i))));
+                            }
+                        }
+
                         if (dateCheck == 0) {
                             mDate = getWeek();
                         } else if (dateCheck == 1) {
@@ -270,7 +303,7 @@ public class ExeploreFragment extends Fragment {
         quote.put("weight", etWeight.getText().toString());
         quote.put("muscle", etMuscle.getText().toString());
         quote.put("fat", etFat.getText().toString());
-        quote.put("num", String.format("%03d", nMax + 1));
+//        quote.put("num", String.format("%03d", nMax + 1));
 //        quote.put("date", getToday());
 //        String newCount = String.format("%03d", nMax + 1);
 
@@ -297,23 +330,46 @@ public class ExeploreFragment extends Fragment {
     public String getDay() {
         SimpleDateFormat sdf = new SimpleDateFormat("MM.dd HH:mm", Locale.KOREA);
         Calendar calendar = new GregorianCalendar(Locale.KOREA);
+        calendar.setTime(new Date());
         return sdf.format(calendar.getTime());
     }
 
     public String[] getWeek() {
         String[] week = new String[7];
-
-        for (int i = 0; i < dayValue.size(); i++) {
-            week[i] = dayValue.get(i);
-            if (i == 7) {
-                break;
+//        SimpleDateFormat sdf = new SimpleDateFormat("MM.dd", Locale.KOREA);
+//        Calendar calendar = new GregorianCalendar(Locale.KOREA);
+//        calendar.setTime(new Date());
+//        calendar.add(Calendar.DAY_OF_MONTH,-7);
+//        String pastDate = sdf.format(calendar.getTime());
+        int count = dayValue.size() - 7;
+        if (dayValue.size() <= 7) {
+            for (int i = 0; i < dayValue.size(); i++) {
+                week[i] = dayValue.get(i);
+            }
+        }  else {
+            for (int i = 0; i < 7; i++) {
+                week[i] = dayValue.get(count);
+                count++;
             }
         }
+//        else {
+//            for (int i = 0 ; i < dayValue.size(); i++) {
+//                if (pastDate.equals(dayValue.get(i))) {
+//                    for (int k = i; k < dayValue.size(); k++) {
+//
+//                    }
+//                }
+//            }
+//        }
+
         return week;
     }
 
     public String[] getMonth() {
         String[] week = new String[30];
+        SimpleDateFormat sdf = new SimpleDateFormat("MM.dd HH:mm", Locale.KOREA);
+        Calendar calendar = new GregorianCalendar(Locale.KOREA);
+        calendar.setTime(new Date());
 
         for (int i = 0; i < dayValue.size(); i++) {
             week[i] = dayValue.get(i);
