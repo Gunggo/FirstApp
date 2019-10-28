@@ -1,12 +1,16 @@
 package com.example.viewmodelex.Exercieses;
 
-public class ExerciesesDTO {
+public class ExerciesesItem {
     private String exerName;
     private String category;
 
-    public ExerciesesDTO(String exerName, String category) {
+    public ExerciesesItem(String exerName, String category) {
         this.exerName = exerName;
         this.category = category;
+    }
+
+    public ExerciesesItem() {
+
     }
 
     public String getExerName() {
@@ -22,6 +26,8 @@ public class ExerciesesDTO {
     }
 
     public void setCategory(String category) {
+
         this.category = category;
     }
+
 }

@@ -2,6 +2,8 @@ package com.example.viewmodelex.Exercieses;
 
 
 import android.app.Dialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import com.example.viewmodelex.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -31,15 +34,16 @@ import java.util.ArrayList;
  */
 public class ExerciesesFragment extends Fragment {
 
-    private ArrayList<ExerciesesDTO> mArrayList;
+    private List<ExerciesesItem> mArrayList;
     private ExerciesesAdapter eAdapter;
-    private int count = -1;
+    DatabaseHelper databaseHelper = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_exercieses, container, false);
+
 
         return v;
     }
@@ -49,6 +53,21 @@ public class ExerciesesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Button button1 = (Button) view.findViewById(R.id.addExer);
+
+        RecyclerView mRecyclerView = (RecyclerView) getView().findViewById(R.id.exercisesList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        databaseHelper = new DatabaseHelper(getContext());
+        mArrayList = databaseHelper.getResult();
+
+        eAdapter = new ExerciesesAdapter(mArrayList);
+        mRecyclerView.setAdapter(eAdapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                linearLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,20 +136,6 @@ public class ExerciesesFragment extends Fragment {
             }
         });
 
-        // 리스트
-        RecyclerView mRecyclerView = (RecyclerView) getView().findViewById(R.id.exercisesList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-
-        mArrayList = new ArrayList<>();
-
-        eAdapter = new ExerciesesAdapter(mArrayList);
-        mRecyclerView.setAdapter(eAdapter);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                linearLayoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-
         newExer.show();
     }
 
@@ -143,13 +148,16 @@ public class ExerciesesFragment extends Fragment {
         String category = spinner_cate.getSelectedItem().toString();
         String exerName = search_bar.getText().toString();
 
-        if("없음".equals(muscleName) || "없음".equals(category) || exerName.length() == 0) {
-            Toast.makeText(getContext(),"운동을 선택해주세요.",Toast.LENGTH_SHORT).show();
+        if ("없음".equals(muscleName) || "없음".equals(category) || exerName.length() == 0) {
+            Toast.makeText(getContext(), "운동을 선택해주세요.", Toast.LENGTH_SHORT).show();
             newExer.dismiss();
             return;
         }
 
-        ExerciesesDTO data = new ExerciesesDTO(exerName + " (" + category + ")", muscleName);
+        databaseHelper = new DatabaseHelper(getContext());
+        databaseHelper.insert(exerName + " (" + category + ")",muscleName);
+
+        ExerciesesItem data = new ExerciesesItem(exerName + " (" + category + ")", muscleName);
         mArrayList.add(0, data);
 
         eAdapter.notifyDataSetChanged();

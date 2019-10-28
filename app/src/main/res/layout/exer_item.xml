@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     android:layout_marginLeft="18dp"
     android:layout_marginTop="5dp"
     android:layout_marginRight="18dp"
@@ -20,7 +20,7 @@
         android:ems="10"
         android:focusableInTouchMode="false"
         android:inputType="textPersonName"
-        android:textSize="16sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
         android:focusableInTouchMode="false"
         android:inputType="textPersonName"
         android:textColor="#BDBDBD"
-        android:textSize="16sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

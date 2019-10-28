@@ -1,7 +1,7 @@
 package com.example.viewmodelex.Exercieses;
 
+import android.content.Context;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.viewmodelex.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ExerciesesAdapter extends RecyclerView.Adapter<ExerciesesAdapter.Holder> {
 
-    private ArrayList<ExerciesesDTO> mList;
+    private List<ExerciesesItem> mList;
+    private ExerciesesItem data;
+//    Context context = null;
 
-    public ExerciesesAdapter(ArrayList<ExerciesesDTO> list) {
+    public ExerciesesAdapter(List<ExerciesesItem> list) {
         this.mList = list;
     }
-
-
 
     @Override
     public Holder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -35,17 +35,16 @@ public class ExerciesesAdapter extends RecyclerView.Adapter<ExerciesesAdapter.Ho
         return viewHolder;
     }
 
-
-
-
     @Override
     public void onBindViewHolder(@NonNull Holder viewholder, int position) {
 
-        viewholder.exerName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
-        viewholder.category.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        viewholder.exerName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        viewholder.category.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 
         viewholder.exerName.setText(mList.get(position).getExerName());
         viewholder.category.setText(mList.get(position).getCategory());
+
+
     }
 
     @Override
@@ -58,11 +57,15 @@ public class ExerciesesAdapter extends RecyclerView.Adapter<ExerciesesAdapter.Ho
         protected TextView exerName;
         protected TextView category;
 
+
         public Holder(@NonNull View itemView) {
             super(itemView);
             this.exerName = (TextView) itemView.findViewById(R.id.exerName);
             this.category = (TextView) itemView.findViewById(R.id.exerCate);
+
         }
+
     }
+
 
 }
