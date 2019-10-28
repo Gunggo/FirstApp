@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +29,14 @@ import com.example.viewmodelex.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ExerciesesFragment extends Fragment {
+    public static final String TAG = "lecture";
 
     private List<ExerciesesItem> mArrayList;
     private ExerciesesAdapter eAdapter;
@@ -61,7 +65,7 @@ public class ExerciesesFragment extends Fragment {
         databaseHelper = new DatabaseHelper(getContext());
         mArrayList = databaseHelper.getResult();
 
-        eAdapter = new ExerciesesAdapter(mArrayList);
+        eAdapter = new ExerciesesAdapter(mArrayList, getContext());
         mRecyclerView.setAdapter(eAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
@@ -155,7 +159,7 @@ public class ExerciesesFragment extends Fragment {
         }
 
         databaseHelper = new DatabaseHelper(getContext());
-        databaseHelper.insert(exerName + " (" + category + ")",muscleName);
+        databaseHelper.insert(exerName + " (" + category + ")", muscleName);
 
         ExerciesesItem data = new ExerciesesItem(exerName + " (" + category + ")", muscleName);
         mArrayList.add(0, data);
