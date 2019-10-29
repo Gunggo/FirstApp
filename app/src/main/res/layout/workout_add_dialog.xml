@@ -6,7 +6,9 @@
     android:layout_height="230dp"
     android:layout_gravity="center"
     android:background="@color/fragmentBackGround"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:minWidth="360dp"
+    android:minHeight="230dp">
 
     <TextView
         android:id="@+id/textView5"
@@ -60,12 +62,12 @@
 
     <Button
         android:id="@+id/exerSave"
+        style="?borderlessButtonStyle"
         android:layout_width="81dp"
         android:layout_height="40dp"
         android:background="@color/fragmentBackGround"
         android:text="@string/dialog_btn1"
-        android:textColor="#BDBDBD"
-        style="?borderlessButtonStyle"
+        android:textColor="@color/grayText"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="@+id/exerSerach"
         app:layout_constraintTop_toTopOf="@+id/textView5" />

@@ -6,7 +6,6 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -70,7 +69,7 @@ public class ExeploreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_exeplore, container, false);
+        View v = inflater.inflate(R.layout.explore_fragment, container, false);
 
         lineChart = (LineChart) v.findViewById(R.id.weight_chart);
         etWeight = v.findViewById(R.id.etWeight);
@@ -148,7 +147,7 @@ public class ExeploreFragment extends Fragment {
         Description description = new Description();
         description.setText("");
 
-        MyMarkerView marker = new MyMarkerView(getActivity(), R.layout.markger_view);
+        MyMarkerView marker = new MyMarkerView(getActivity(), R.layout.explore_markger_view);
         marker.setChartView(lineChart);
         lineChart.setMarker(marker);
 
@@ -238,7 +237,7 @@ public class ExeploreFragment extends Fragment {
                                 }
                             }  else {
                                 count = dayValue.size() - 30;
-                                for (int i = 0; i < 7; i++) {
+                                for (int i = 0; i < 30; i++) {
                                     weightEntry.add(new Entry(i, Integer.parseInt(weightValue.get(count))));
                                     muscleEntry.add(new Entry(i, Integer.parseInt(muscleValue.get(count))));
                                     fatEntry.add(new Entry(i, Integer.parseInt(fatValue.get(count))));

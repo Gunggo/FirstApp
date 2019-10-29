@@ -27,6 +27,7 @@
     <string name="dialog_sel1op">없음</string>
     <string name="dialog_sel2op">없음</string>
     <string name="dialog_btn1">Save</string>
+    <string name="log_item_header">수행한 세트</string>
 
     <!-- explore_string -->
     <string name="explo_week">최근 7일</string>
@@ -37,6 +38,20 @@
     <string name="explo_text3">체지방(kg)</string>
     <string name="explo_saveBtn">저장하기</string>
     <string name="explo_editHint">입력</string>
+
+    <!-- workout_string -->
+    <string name="work_done">완료</string>
+    <string name="work_add_set">+ 세트 추가</string>
+    <string name="work_add_work">워크아웃 추가</string>
+    <string name="work_rutin">루틴</string>
+    <string name="work_rutin_btn">루틴 추가</string>
+    <string name="work_row1">세트</string>
+    <string name="work_row2">Kg</string>
+    <string name="work_row3">Rep</string>
+    <string name="dial_add_btn">추가</string>
+
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

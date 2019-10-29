@@ -2,8 +2,6 @@ package com.example.viewmodelex.Exercieses;
 
 
 import android.app.Dialog;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +11,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +23,7 @@ import android.widget.Toast;
 
 import com.example.viewmodelex.R;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 /**
@@ -46,7 +40,7 @@ public class ExerciesesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_exercieses, container, false);
+        View v = inflater.inflate(R.layout.exercieses_fragment, container, false);
 
 
         return v;
@@ -84,7 +78,7 @@ public class ExerciesesFragment extends Fragment {
     public void callDialog(View v) {
 
         final Dialog newExer = new Dialog(getContext());
-        newExer.setContentView(R.layout.dialog_newexer);
+        newExer.setContentView(R.layout.workout_add_dialog);
 
         Button cancel = newExer.findViewById(R.id.newExerCancelBtn);
         cancel.setOnClickListener(new View.OnClickListener() {

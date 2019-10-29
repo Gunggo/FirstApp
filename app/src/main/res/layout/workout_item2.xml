@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="18dp"
+    android:background="@color/fragmentBackGround"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etSet2"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etKg"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etRep"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etKg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="185dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

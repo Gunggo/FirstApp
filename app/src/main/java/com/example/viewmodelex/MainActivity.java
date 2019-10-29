@@ -16,6 +16,8 @@ import android.widget.Spinner;
 
 import com.example.viewmodelex.Exercieses.ExerciesesFragment;
 import com.example.viewmodelex.Explore.ExeploreFragment;
+import com.example.viewmodelex.WorkOut.RecordWorkFragment;
+import com.example.viewmodelex.WorkOut.WorkoutsFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private WorkoutsFragment workoutsFragment = new WorkoutsFragment();
+    private RecordWorkFragment recordWorkFragment= new RecordWorkFragment();
     private SettingFragment settingFragment = new SettingFragment();
     private LogsFragment logsFragment = new LogsFragment();
     private ExeploreFragment exeploreFragment = new ExeploreFragment();
@@ -83,61 +86,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void callRecord() {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frameLayout, recordWorkFragment).commitAllowingStateLoss();
 
-    public void getDialog(View view) {
-        final Dialog newExer = new Dialog(this);
-        newExer.setContentView(R.layout.dialog_newexer);
-
-        Button cancel = newExer.findViewById(R.id.newExerCancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newExer.dismiss();
-            }
-        });
-
-        //스피너
-        final Spinner spinner_muscle = (Spinner) view.findViewById(R.id.spinner);
-        final Spinner spinner_cate = (Spinner) view.findViewById(R.id.spinner2);
-
-        String[] str1 = getResources().getStringArray(R.array.bodyaprt_arr);
-        String[] str2 = getResources().getStringArray(R.array.catecory_arr);
-
-        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
-                (this, R.layout.support_simple_spinner_dropdown_item, str1);
-        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>
-                (this, R.layout.support_simple_spinner_dropdown_item, str2);
-
-//        adapter1.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-//        adapter2.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-//        adapter2.createFromResource(getContext(),R.array.catecory_arr,R.layout.support_simple_spinner_dropdown_item);
-//        adapter1.createFromResource(getContext(),R.array.bodyaprt_arr,R.layout.support_simple_spinner_dropdown_item);
-
-        spinner_muscle.setAdapter(adapter1);
-        spinner_cate.setAdapter(adapter2);
-
-        spinner_muscle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spinner_muscle.getSelectedItemPosition() > 0) {
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        spinner_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spinner_cate.getSelectedItemPosition() > 0) {
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        newExer.show();
     }
+
 }

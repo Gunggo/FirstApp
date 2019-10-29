@@ -7,4 +7,6 @@
     <color name="fragmentBtnBack">#212121</color>
     <color name="workOutBtn">#29B6F6</color>
     <color name="legendColor">#FFFFFF</color>
+    <color name="grayText">#BDBDBD</color>
+    <color name="blueText">#03A9F4</color>
 </resources>
