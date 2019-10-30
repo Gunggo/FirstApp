@@ -1,100 +1,108 @@
 package com.example.viewmodelex.WorkOut;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.viewmodelex.Exercieses.ExerciesesItem;
 import com.example.viewmodelex.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class WorkOutAdapter extends RecyclerView.Adapter<WorkOutAdapter.Holder> {
+public class WorkOutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public interface OnListItemLongSelectedInterface {
-        void onItemLongSelected(View v, int position);
-    }
+    private final int TYPE_HEADER = 0;
+    private final int TYPE_ITEM = 1;
+    private final int TYPE_FOOTER = 2;
 
-    public interface OnListItemSelectedInterface {
-        void onItemSelected(View v, int position);
-    }
-
-    private OnListItemSelectedInterface mListener;
-    private OnListItemLongSelectedInterface mLongListener;
-    public static final String TAG = "lecture";
-    private List<ExerciesesItem> mList;
     private Context context;
+    private List<WorkOutItem> listData = new ArrayList<>();
 
-    public WorkOutAdapter(List<ExerciesesItem> list, Context context, OnListItemSelectedInterface listener) {
-        this.mList = list;
-        this.context = context;
-        this.mListener = listener;
+
+
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        RecyclerView.ViewHolder holder;
+        View view;
+        if (viewType == TYPE_HEADER) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_header, parent,false);
+            holder = new HeaderViewHolder(view);
+        } else if (viewType == TYPE_FOOTER) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_footer, parent, false);
+            holder = new FooterViewHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_item, parent, false);
+            holder = new ItemViewHolder(view);
+        }
+
+        return holder;
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.exer_item, viewGroup, false);
-        final Holder viewHolder = new Holder(view);
-
-        return viewHolder;
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof HeaderViewHolder) {
+            HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+        } else if (holder instanceof FooterViewHolder) {
+            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
+        } else {
+            // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
+            ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+            itemViewHolder.onBind(listData.get(position - 1));
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Holder viewholder, int position) {
-
-        viewholder.exerName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        viewholder.category.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-
-        viewholder.exerName.setText(mList.get(position).getExerName());
-        viewholder.category.setText(mList.get(position).getCategory());
-
-//        viewholder.exerName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                viewholder.itemView.setBackgroundColor(Color.BLUE);
-//            }
-//        });
+    public int getItemViewType(int position) {
+        if (position == 0)
+            return TYPE_HEADER;
+        else if (position == listData.size() + 1)
+            return TYPE_FOOTER;
+        else
+            return TYPE_ITEM;
     }
 
     @Override
     public int getItemCount() {
-        return this.mList.size();
+        return listData.size() + 2;
     }
 
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-    public class Holder extends RecyclerView.ViewHolder {
-        private TextView exerName;
-        private TextView category;
+        HeaderViewHolder(View headerView) {
+            super(headerView);
+        }
+    }
 
-        public Holder(@NonNull View itemView) {
+    class FooterViewHolder extends RecyclerView.ViewHolder {
+
+        FooterViewHolder(View footerView) {
+            super(footerView);
+        }
+    }
+
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView textView1;
+        private TextView textView2;
+        private TextView textView3;
+
+        ItemViewHolder(View itemView) {
             super(itemView);
-            this.exerName = (TextView) itemView.findViewById(R.id.exerName);
-            this.category = (TextView) itemView.findViewById(R.id.exerCate);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    mListener.onItemSelected(v, getAdapterPosition());
-
-                }
-            });
+            textView1 = itemView.findViewById(R.id.etKg);
+            textView2 = itemView.findViewById(R.id.etSet);
+            textView3 = itemView.findViewById(R.id.etRep);
         }
 
-    }
-
-    public void viewDialog() {
-
+        void onBind(WorkOutItem data) {
+            textView1.setText(data.getKilogram());
+            textView2.setText(data.getSet());
+            textView3.setText(data.getRep());
+        }
     }
 }

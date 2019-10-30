@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_marginTop="5dp"
-    android:background="@color/fragmentBackGround"
+    android:background="@drawable/item_selector"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -38,4 +38,5 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

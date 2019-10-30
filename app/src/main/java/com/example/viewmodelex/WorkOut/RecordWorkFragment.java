@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,20 +16,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.viewmodelex.Exercieses.DatabaseHelper;
-import com.example.viewmodelex.Exercieses.ExerciesesAdapter;
 import com.example.viewmodelex.Exercieses.ExerciesesItem;
 import com.example.viewmodelex.R;
 
 import java.util.List;
 
-public class RecordWorkFragment extends Fragment implements WorkOutAdapter.OnListItemSelectedInterface {
+public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter.OnListItemSelectedInterface {
 
     private List<ExerciesesItem> mArrayList;
     private DatabaseHelper databaseHelper;
     private EditText searchText;
-    private WorkOutAdapter eAdapter;
+    private RecordWorkOutAdapter eAdapter;
     private Button addWork;
     private Button addSet;
+    private RecyclerView mRecyclerView;
+
 
     @Nullable
     @Override
@@ -46,7 +46,6 @@ public class RecordWorkFragment extends Fragment implements WorkOutAdapter.OnLis
         super.onViewCreated(view, savedInstanceState);
 
         addWork = (Button)view.findViewById(R.id.workAddWorkBtn);
-        addSet = (Button)view.findViewById(R.id.workAddSetBtn);
         searchText = (EditText)view.findViewById(R.id.workDialSearch);
 
         addWork.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +54,8 @@ public class RecordWorkFragment extends Fragment implements WorkOutAdapter.OnLis
                 callDial();
             }
         });
+
+
     }
 
     public void callDial() {
@@ -74,19 +75,20 @@ public class RecordWorkFragment extends Fragment implements WorkOutAdapter.OnLis
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addSet.setVisibility(View.VISIBLE);
+
                 recordDial.dismiss();
             }
         });
 
-        RecyclerView mRecyclerView = (RecyclerView) recordDial.findViewById(R.id.workDialList);
+        mRecyclerView = (RecyclerView) recordDial.findViewById(R.id.workDialList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         databaseHelper = new DatabaseHelper(getContext());
         mArrayList = databaseHelper.getResult();
 
-        eAdapter = new WorkOutAdapter(mArrayList, getContext(), this);
+        eAdapter = new RecordWorkOutAdapter(mArrayList, getContext(), this);
+        eAdapter.setListener(this);
         mRecyclerView.setAdapter(eAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
@@ -111,7 +113,7 @@ public class RecordWorkFragment extends Fragment implements WorkOutAdapter.OnLis
 
     @Override
     public void onItemSelected(View v, int position) {
-        StdRecyclerAdapter.StdViewHolder viewHolder = (StdRecyclerAdapter.StdViewHolder)recyclerView.findViewHolderForAdapterPosition(position);
-        Toast.makeText(this, viewHolder.textView.getText().toString(), Toast.LENGTH_SHORT).show();
+        RecordWorkOutAdapter.Holder viewHolder = (RecordWorkOutAdapter.Holder)mRecyclerView.findViewHolderForAdapterPosition(position);
     }
+
 }

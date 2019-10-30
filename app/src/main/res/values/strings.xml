@@ -42,7 +42,8 @@
     <!-- workout_string -->
     <string name="work_done">완료</string>
     <string name="work_add_set">+ 세트 추가</string>
-    <string name="work_add_work">워크아웃 추가</string>
+    <string name="work_add">워크아웃 추가</string>
+    <string name="work_cancle">워크아웃 취소</string>
     <string name="work_rutin">루틴</string>
     <string name="work_rutin_btn">루틴 추가</string>
     <string name="work_row1">세트</string>

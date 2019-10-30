@@ -9,4 +9,7 @@
     <color name="legendColor">#FFFFFF</color>
     <color name="grayText">#BDBDBD</color>
     <color name="blueText">#03A9F4</color>
+    <color name="selectColor">#455A64</color>
+    <color name="normal_item_bg">#424242</color>
+    <color name="selected_item_bg">#455A64</color>
 </resources>
