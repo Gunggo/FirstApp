@@ -1,9 +1,11 @@
 package com.example.viewmodelex.WorkOut;
 
 public class WorkOutItem {
+    private String title;
     private String kilogram;
     private String rep;
     private String set;
+    private String date;
 
     public WorkOutItem(String kilogram, String rep, String set) {
         this.kilogram = kilogram;
@@ -13,6 +15,22 @@ public class WorkOutItem {
 
     public WorkOutItem() {
 
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getSet() {

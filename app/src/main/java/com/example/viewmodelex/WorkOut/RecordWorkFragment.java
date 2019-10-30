@@ -17,19 +17,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.viewmodelex.Exercieses.DatabaseHelper;
 import com.example.viewmodelex.Exercieses.ExerciesesItem;
+import com.example.viewmodelex.Exercieses.WorkOutDatabase;
 import com.example.viewmodelex.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter.OnListItemSelectedInterface {
 
     private List<ExerciesesItem> mArrayList;
+    private List<WorkOutItem> innerList;
     private DatabaseHelper databaseHelper;
+    private WorkOutDatabase innerDatabase;
     private EditText searchText;
-    private RecordWorkOutAdapter eAdapter;
+    private RecordWorkOutAdapter dialAdapter;
+    private WorkOutAdapter innerAdapter;
     private Button addWork;
-    private Button addSet;
-    private RecyclerView mRecyclerView;
+    private RecyclerView dialRecyclerView;
+    private RecyclerView innerRecyclerView;
+    private ExerciesesItem clickItem;
 
 
     @Nullable
@@ -45,8 +52,8 @@ public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        addWork = (Button)view.findViewById(R.id.workAddWorkBtn);
-        searchText = (EditText)view.findViewById(R.id.workDialSearch);
+        addWork = (Button) view.findViewById(R.id.workAddWorkBtn);
+        searchText = (EditText) view.findViewById(R.id.workDialSearch);
 
         addWork.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,25 +82,44 @@ public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (innerRecyclerView == null) {
+                    innerRecyclerView = getView().findViewById(R.id.workOutList);
+                    LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext());
+                    innerRecyclerView.setLayoutManager(linearLayoutManager1);
 
+                    innerList = new WorkOutAdapter().getListData();
+                    if (innerList == null) {
+                        innerList = new ArrayList<>();
+                    }
+
+                }
+                innerAdapter = new WorkOutAdapter(getContext(), innerList);
+                innerRecyclerView.setAdapter(innerAdapter);
+
+                getData(clickItem);
                 recordDial.dismiss();
             }
         });
 
-        mRecyclerView = (RecyclerView) recordDial.findViewById(R.id.workDialList);
+        dialRecyclerView = (RecyclerView) recordDial.findViewById(R.id.workDialList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        dialRecyclerView.setLayoutManager(linearLayoutManager);
 
         databaseHelper = new DatabaseHelper(getContext());
         mArrayList = databaseHelper.getResult();
 
-        eAdapter = new RecordWorkOutAdapter(mArrayList, getContext(), this);
-        eAdapter.setListener(this);
-        mRecyclerView.setAdapter(eAdapter);
+        dialAdapter = new RecordWorkOutAdapter(mArrayList, getContext(), this);
+        dialAdapter.setListener(new RecordWorkOutAdapter.OnListItemSelectedInterface() {
+            @Override
+            public void onItemSelected(View v, int position) {
+                clickItem = mArrayList.get(position);
+            }
+        });
+        dialRecyclerView.setAdapter(dialAdapter);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dialRecyclerView.getContext(),
                 linearLayoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+        dialRecyclerView.addItemDecoration(dividerItemDecoration);
 
         addWork.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,9 +137,22 @@ public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter
 
     }
 
+    private void getData(ExerciesesItem clickItem) {
+
+        WorkOutItem data = new WorkOutItem();
+        data.setKilogram("0");
+        data.setSet("1");
+        data.setRep("0");
+        data.setTitle(clickItem.getExerName());
+
+        innerList.add(data);
+        innerAdapter.notifyDataSetChanged();
+    }
+
+
     @Override
     public void onItemSelected(View v, int position) {
-        RecordWorkOutAdapter.Holder viewHolder = (RecordWorkOutAdapter.Holder)mRecyclerView.findViewHolderForAdapterPosition(position);
+        RecordWorkOutAdapter.Holder viewHolder = (RecordWorkOutAdapter.Holder) dialRecyclerView.findViewHolderForAdapterPosition(position);
     }
 
 }

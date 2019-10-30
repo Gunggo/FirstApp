@@ -1,9 +1,11 @@
 package com.example.viewmodelex.WorkOut;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,22 +17,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkOutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final String TAG = "check";
 
     private final int TYPE_HEADER = 0;
     private final int TYPE_ITEM = 1;
     private final int TYPE_FOOTER = 2;
 
     private Context context;
-    private List<WorkOutItem> listData = new ArrayList<>();
+    private List<WorkOutItem> listData;
+    private OnListItemSelectedListener selListener;
 
+    public WorkOutAdapter(Context context, List<WorkOutItem> listData) {
+        this.context = context;
+        this.listData = listData;
+    }
 
+    public WorkOutAdapter() {
+    }
+
+    public interface OnListItemSelectedListener {
+        void onItemSelected(View v, int position);
+    }
+
+    public void setListener(OnListItemSelectedListener listener) {
+        this.selListener = listener;
+    }
 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         RecyclerView.ViewHolder holder;
         View view;
         if (viewType == TYPE_HEADER) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_header, parent,false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_header, parent, false);
             holder = new HeaderViewHolder(view);
         } else if (viewType == TYPE_FOOTER) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_footer, parent, false);
@@ -38,6 +56,7 @@ public class WorkOutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_item, parent, false);
             holder = new ItemViewHolder(view);
+
         }
 
         return holder;
@@ -45,8 +64,10 @@ public class WorkOutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+            headerViewHolder.onBind(listData.get(position));
         } else if (holder instanceof FooterViewHolder) {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
         } else {
@@ -71,17 +92,45 @@ public class WorkOutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return listData.size() + 2;
     }
 
+    void addItem(WorkOutItem data) {
+        listData.add(data);
+    }
+
+    public List<WorkOutItem> getListData() {
+        return listData;
+    }
+
     class HeaderViewHolder extends RecyclerView.ViewHolder {
+        private TextView textView;
 
         HeaderViewHolder(View headerView) {
+
             super(headerView);
+            textView = itemView.findViewById(R.id.etTitle);
+        }
+
+        void onBind(WorkOutItem data) {
+            textView.setText(data.getTitle());
         }
     }
 
     class FooterViewHolder extends RecyclerView.ViewHolder {
+        private Button addSet;
 
         FooterViewHolder(View footerView) {
             super(footerView);
+            addSet = footerView.findViewById(R.id.workAddSetBtn2);
+            addSet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addItem(new WorkOutItem("0", "0", Integer.toString(listData.size() + 1)));
+                    notifyDataSetChanged();
+//                    int position = getAdapterPosition();
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        selListener.onItemSelected(v, position);
+//                    }
+                }
+            });
         }
     }
 
@@ -94,8 +143,8 @@ public class WorkOutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ItemViewHolder(View itemView) {
             super(itemView);
 
-            textView1 = itemView.findViewById(R.id.etKg);
-            textView2 = itemView.findViewById(R.id.etSet);
+            textView1 = itemView.findViewById(R.id.etSet);
+            textView2 = itemView.findViewById(R.id.etKg);
             textView3 = itemView.findViewById(R.id.etRep);
         }
 
