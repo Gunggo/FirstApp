@@ -12,4 +12,5 @@
     <color name="selectColor">#455A64</color>
     <color name="normal_item_bg">#424242</color>
     <color name="selected_item_bg">#455A64</color>
+    <color name="Red">#F44336</color>
 </resources>

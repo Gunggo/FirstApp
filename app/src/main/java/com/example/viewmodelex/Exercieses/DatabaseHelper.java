@@ -43,9 +43,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<ExerciesesItem> getResult() {
+    public ArrayList<ExerciesesItem> getResult() {
         SQLiteDatabase db = getReadableDatabase();
-        List<ExerciesesItem> datas = new ArrayList<>();
+        ArrayList<ExerciesesItem> datas = new ArrayList<>();
 
         Cursor cursor = db.rawQuery(ContactDBCtrct.SQL_SELECT, null);
         if(cursor.moveToFirst()) {

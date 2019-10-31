@@ -2,28 +2,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragmentBackGround"
-    tools:context=".LogsFragment">
+    tools:context=".Log.LogsFragment">
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="409dp"
-        android:layout_height="367dp"
-        android:layout_marginTop="10dp"
-        android:maxDate=""
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarLog"
+        android:layout_width="410dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="1dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:mcv_dateTextAppearance="@style/CustomTextAppearance"
+        app:mcv_selectionColor="@color/blueText"
+        app:mcv_showOtherDates="all" />
+    <!--    <CalendarView-->
+    <!--        android:id="@+id/calendarView"-->
+    <!--        android:layout_width="409dp"-->
+    <!--        android:layout_height="367dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:maxDate=""-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarList"
         android:layout_width="417dp"
-        android:layout_height="350dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarLog" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

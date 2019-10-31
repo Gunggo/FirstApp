@@ -1,12 +1,15 @@
 package com.example.viewmodelex.WorkOut;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,26 +20,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.viewmodelex.Exercieses.DatabaseHelper;
 import com.example.viewmodelex.Exercieses.ExerciesesItem;
-import com.example.viewmodelex.Exercieses.WorkOutDatabase;
 import com.example.viewmodelex.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter.OnListItemSelectedInterface {
 
-    private List<ExerciesesItem> mArrayList;
-    private List<WorkOutItem> innerList;
+    private ArrayList<ExerciesesItem> mArrayList;
+    private ArrayList<WorkOutItem> innerList;
+    private ArrayList<String> mapTitle;
+    private HashMap<String, WorkOutItem> workMap;
     private DatabaseHelper databaseHelper;
-    private WorkOutDatabase innerDatabase;
-    private EditText searchText;
     private RecordWorkOutAdapter dialAdapter;
-    private WorkOutAdapter innerAdapter;
+    private EditText searchText;
     private Button addWork;
+    private Button doneWork;
+    private ImageButton timerBtn;
     private RecyclerView dialRecyclerView;
+    private WorkOutAdapter innerAdapter;
     private RecyclerView innerRecyclerView;
     private ExerciesesItem clickItem;
+    private String clickTitle;
+    private WorkOutDatabase innerDatabase;
+    private Timer timer;
 
 
     @Nullable
@@ -53,12 +62,33 @@ public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter
         super.onViewCreated(view, savedInstanceState);
 
         addWork = (Button) view.findViewById(R.id.workAddWorkBtn);
+        doneWork = (Button) view.findViewById(R.id.workDoneBtn);
+        timerBtn = (ImageButton) view.findViewById(R.id.timberBtn);
         searchText = (EditText) view.findViewById(R.id.workDialSearch);
+        mapTitle = new ArrayList<>();
 
         addWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callDial();
+            }
+        });
+        doneWork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickSaveBtn();
+            }
+        });
+        timerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+
+                    }
+                },0, 90000);
             }
         });
 
@@ -82,21 +112,14 @@ public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (innerRecyclerView == null) {
-                    innerRecyclerView = getView().findViewById(R.id.workOutList);
-                    LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext());
-                    innerRecyclerView.setLayoutManager(linearLayoutManager1);
+                innerRecyclerView = getView().findViewById(R.id.workOutList);
+                LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext());
+                innerRecyclerView.setLayoutManager(linearLayoutManager1);
 
-                    innerList = new WorkOutAdapter().getListData();
-                    if (innerList == null) {
-                        innerList = new ArrayList<>();
-                    }
-
-                }
-                innerAdapter = new WorkOutAdapter(getContext(), innerList);
+                innerAdapter = new WorkOutAdapter(mapTitle, getContext());
                 innerRecyclerView.setAdapter(innerAdapter);
 
-                getData(clickItem);
+                getData(clickItem.getExerName());
                 recordDial.dismiss();
             }
         });
@@ -137,15 +160,9 @@ public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter
 
     }
 
-    private void getData(ExerciesesItem clickItem) {
+    private void getData(String title) {
 
-        WorkOutItem data = new WorkOutItem();
-        data.setKilogram("0");
-        data.setSet("1");
-        data.setRep("0");
-        data.setTitle(clickItem.getExerName());
-
-        innerList.add(data);
+        mapTitle.add(title);
         innerAdapter.notifyDataSetChanged();
     }
 
@@ -153,6 +170,24 @@ public class RecordWorkFragment extends Fragment implements RecordWorkOutAdapter
     @Override
     public void onItemSelected(View v, int position) {
         RecordWorkOutAdapter.Holder viewHolder = (RecordWorkOutAdapter.Holder) dialRecyclerView.findViewHolderForAdapterPosition(position);
+    }
+
+    public void clickSaveBtn() {
+        workMap = new HashMap<>(innerAdapter.getMapData());
+        innerDatabase = new WorkOutDatabase(getContext());
+
+        innerDatabase.insert(workMap);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setMessage("저장되었습니다.");
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mapTitle.clear();
+                innerAdapter.notifyDataSetChanged();
+            }
+        });
+        alert.show();
+
     }
 
 }

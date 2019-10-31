@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="18dp"
+    android:background="@color/fragmentBackGround"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etTitle"
+        style="@style/CustomTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/blueText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        style="@style/WorkOutRowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/work_row1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+
+    <TextView
+        android:id="@+id/textView12"
+        style="@style/WorkOutRowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/work_row3"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+
+    <TextView
+        android:id="@+id/textView13"
+        style="@style/WorkOutRowText"
+        android:layout_width="18dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/work_row2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="186dp" />
+
+    <EditText
+        android:id="@+id/etSet1"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="1"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <EditText
+        android:id="@+id/etKg1"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etSet1"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <EditText
+        android:id="@+id/etRep1"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etKg1"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toEndOf="@+id/etRep1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSet2"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="2"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet1" />
+
+    <EditText
+        android:id="@+id/etKg2"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etSet2"
+        app:layout_constraintTop_toBottomOf="@+id/etKg1" />
+
+    <EditText
+        android:id="@+id/etRep2"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etKg2"
+        app:layout_constraintTop_toBottomOf="@+id/etRep1" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@+id/etRep2"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox1" />
+
+    <EditText
+        android:id="@+id/etSet3"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="3"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet2" />
+
+    <EditText
+        android:id="@+id/etKg3"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etSet3"
+        app:layout_constraintTop_toBottomOf="@+id/etKg2" />
+
+    <EditText
+        android:id="@+id/etRep3"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etKg3"
+        app:layout_constraintTop_toBottomOf="@+id/etRep2" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toEndOf="@+id/etRep3"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+
+    <EditText
+        android:id="@+id/etSet4"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="4"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet3" />
+
+    <EditText
+        android:id="@+id/etKg4"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etSet4"
+        app:layout_constraintTop_toBottomOf="@+id/etKg3" />
+
+    <EditText
+        android:id="@+id/etRep4"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etKg4"
+        app:layout_constraintTop_toBottomOf="@+id/etRep3" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toEndOf="@+id/etRep4"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+
+    <EditText
+        android:id="@+id/etSet5"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="5"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet4" />
+
+    <EditText
+        android:id="@+id/etKg5"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etSet5"
+        app:layout_constraintTop_toBottomOf="@+id/etKg4" />
+
+    <EditText
+        android:id="@+id/etRep5"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etKg5"
+        app:layout_constraintTop_toBottomOf="@+id/etRep4" />
+
+    <CheckBox
+        android:id="@+id/checkBox5"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toEndOf="@+id/etRep5"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.example.viewmodelex.WorkOut;
 
+import java.util.ArrayList;
+
 public class WorkOutItem {
     private String title;
     private String kilogram;
@@ -7,18 +9,33 @@ public class WorkOutItem {
     private String set;
     private String date;
 
-    public WorkOutItem(String kilogram, String rep, String set) {
+    private ArrayList<String> kgList;
+    private ArrayList<String> repList;
+
+    public WorkOutItem(String kilogram, String rep) {
         this.kilogram = kilogram;
         this.rep = rep;
-        this.set = set;
     }
 
     public WorkOutItem() {
-
+        kgList = new ArrayList<>();
+        repList = new ArrayList<>();
     }
 
-    public String getTitle() {
-        return title;
+    public ArrayList<String> getKgList() {
+        return kgList;
+    }
+
+    public void addKgList(String kg) {
+        kgList.add(kg);
+    }
+
+    public ArrayList<String> getRepList() {
+        return repList;
+    }
+
+    public void addRepList(String rep) {
+        repList.add(rep);
     }
 
     public String getDate() {
@@ -27,6 +44,10 @@ public class WorkOutItem {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {

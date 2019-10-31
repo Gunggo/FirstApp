@@ -35,10 +35,14 @@
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">1</item>
     </style>
-    <!-- 캘린더 뷰 스타일 -->
-<!--    <style name="CalendarViewThema">-->
-<!--        <item name="android:calendarTextColor">#90A4AE</item>-->
-<!--        <item name="android:colorAccent">#FFFF00</item>-->
-<!--    </style>-->
+<!--     캘린더 뷰 스타일 -->
+    <style name="CalendarViewThema">
+        <item name="android:calendarTextColor">#90A4AE</item>
+        <item name="android:colorAccent">#FFFF00</item>
+    </style>
+    <style name="CustomTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@drawable/my_date_text_color</item>
+    </style>
+
 
 </resources>

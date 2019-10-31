@@ -1,11 +1,9 @@
 package com.example.viewmodelex.WorkOut;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,144 +12,70 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.viewmodelex.R;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
-public class WorkOutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final String TAG = "check";
+public class WorkOutAdapter extends RecyclerView.Adapter<WorkOutAdapter.Holder> {
 
-    private final int TYPE_HEADER = 0;
-    private final int TYPE_ITEM = 1;
-    private final int TYPE_FOOTER = 2;
-
+    public static final String TAG = "lecture";
+    private ArrayList<WorkOutItem> workList;
+    private HashMap<String, WorkOutItem> mapData;
     private Context context;
-    private List<WorkOutItem> listData;
-    private OnListItemSelectedListener selListener;
 
-    public WorkOutAdapter(Context context, List<WorkOutItem> listData) {
+    public WorkOutAdapter(HashMap<String, WorkOutItem> mapData, Context context) {
+        this.mapData = mapData;
         this.context = context;
-        this.listData = listData;
-    }
-
-    public WorkOutAdapter() {
-    }
-
-    public interface OnListItemSelectedListener {
-        void onItemSelected(View v, int position);
-    }
-
-    public void setListener(OnListItemSelectedListener listener) {
-        this.selListener = listener;
-    }
-
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        RecyclerView.ViewHolder holder;
-        View view;
-        if (viewType == TYPE_HEADER) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_header, parent, false);
-            holder = new HeaderViewHolder(view);
-        } else if (viewType == TYPE_FOOTER) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_footer, parent, false);
-            holder = new FooterViewHolder(view);
-        } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_item, parent, false);
-            holder = new ItemViewHolder(view);
-
-        }
-
-        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public Holder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.workout_add, viewGroup, false);
+        final Holder viewHolder = new Holder(view);
 
-        if (holder instanceof HeaderViewHolder) {
-            HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-            headerViewHolder.onBind(listData.get(position));
-        } else if (holder instanceof FooterViewHolder) {
-            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-        } else {
-            // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
-            ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            itemViewHolder.onBind(listData.get(position - 1));
-        }
+        return viewHolder;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (position == 0)
-            return TYPE_HEADER;
-        else if (position == listData.size() + 1)
-            return TYPE_FOOTER;
-        else
-            return TYPE_ITEM;
+    public void onBindViewHolder(@NonNull final Holder viewholder, int position) {
+
     }
 
     @Override
     public int getItemCount() {
-        return listData.size() + 2;
+        return this.mapData.size();
     }
 
-    void addItem(WorkOutItem data) {
-        listData.add(data);
-    }
 
-    public List<WorkOutItem> getListData() {
-        return listData;
-    }
+    public class Holder extends RecyclerView.ViewHolder {
+        private TextView etTitle;
 
-    class HeaderViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private TextView etKg1;
+        private TextView etKg2;
+        private TextView etKg3;
+        private TextView etKg4;
+        private TextView etKg5;
+        private TextView etRep1;
+        private TextView etRep2;
+        private TextView etRep3;
+        private TextView etRep4;
+        private TextView etRep5;
 
-        HeaderViewHolder(View headerView) {
-
-            super(headerView);
-            textView = itemView.findViewById(R.id.etTitle);
-        }
-
-        void onBind(WorkOutItem data) {
-            textView.setText(data.getTitle());
-        }
-    }
-
-    class FooterViewHolder extends RecyclerView.ViewHolder {
-        private Button addSet;
-
-        FooterViewHolder(View footerView) {
-            super(footerView);
-            addSet = footerView.findViewById(R.id.workAddSetBtn2);
-            addSet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    addItem(new WorkOutItem("0", "0", Integer.toString(listData.size() + 1)));
-                    notifyDataSetChanged();
-//                    int position = getAdapterPosition();
-//                    if (position != RecyclerView.NO_POSITION) {
-//                        selListener.onItemSelected(v, position);
-//                    }
-                }
-            });
-        }
-    }
-
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView textView1;
-        private TextView textView2;
-        private TextView textView3;
-
-        ItemViewHolder(View itemView) {
+        public Holder(@NonNull View itemView) {
             super(itemView);
+            this.etTitle = (TextView) itemView.findViewById(R.id.etTitle);
 
-            textView1 = itemView.findViewById(R.id.etSet);
-            textView2 = itemView.findViewById(R.id.etKg);
-            textView3 = itemView.findViewById(R.id.etRep);
-        }
+            this.etKg1 = (TextView) itemView.findViewById(R.id.etKg1);
+            this.etKg2 = (TextView) itemView.findViewById(R.id.etKg2);
+            this.etKg3 = (TextView) itemView.findViewById(R.id.etKg3);
+            this.etKg4 = (TextView) itemView.findViewById(R.id.etKg4);
+            this.etKg5 = (TextView) itemView.findViewById(R.id.etKg5);
 
-        void onBind(WorkOutItem data) {
-            textView1.setText(data.getKilogram());
-            textView2.setText(data.getSet());
-            textView3.setText(data.getRep());
+            this.etRep1 = (TextView) itemView.findViewById(R.id.etRep1);
+            this.etRep2 = (TextView) itemView.findViewById(R.id.etRep2);
+            this.etRep3 = (TextView) itemView.findViewById(R.id.etRep3);
+            this.etRep4 = (TextView) itemView.findViewById(R.id.etRep4);
+            this.etRep5 = (TextView) itemView.findViewById(R.id.etRep5);
+
         }
     }
 }

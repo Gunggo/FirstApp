@@ -5,17 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 
 import com.example.viewmodelex.Exercieses.ExerciesesFragment;
 import com.example.viewmodelex.Explore.ExeploreFragment;
+import com.example.viewmodelex.Log.LogsFragment;
 import com.example.viewmodelex.WorkOut.RecordWorkFragment;
 import com.example.viewmodelex.WorkOut.WorkoutsFragment;
 import com.google.android.gms.ads.AdRequest;

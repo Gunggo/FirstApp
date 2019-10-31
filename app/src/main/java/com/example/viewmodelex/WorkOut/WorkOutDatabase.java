@@ -1,4 +1,4 @@
-package com.example.viewmodelex.Exercieses;
+package com.example.viewmodelex.WorkOut;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,12 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.viewmodelex.WorkOut.WorkOutItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class WorkOutDatabase extends SQLiteOpenHelper {
 
     public static final int DB_VERSION = 1;
-    public static final String DBFILE_CONTACE = "contact.db";
+    public static final String DBFILE_CONTACE = "workLog.db";
 
     public WorkOutDatabase(Context context) {
         super(context, DBFILE_CONTACE, null, DB_VERSION);
@@ -28,7 +30,7 @@ public class WorkOutDatabase extends SQLiteOpenHelper {
                         "WORK_SET" + " TEXT" + ", " +
                         "WORK_KG" + " TEXT" + ", " +
                         "WORK_RAP" + " TEXT" + ", " +
-                        "WORK_DATE" + " TEXT"        +
+                        "WORK_DATE" + " DATETIME DEFAULT (datetime('now','+9 hours'))" +
                         ")"
         );
     }
@@ -40,13 +42,28 @@ public class WorkOutDatabase extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
     //    INSERT OR REPLACE INTO CONTACT_T (EXER_NAME, EXER_CATE) VALUES (x, x)
-    public void insert(String title, String set, String kg, String rap) {
+    public void insert(HashMap<String, WorkOutItem> workMap) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(
-                "INSERT OR REPLACE INTO CONTACT_T (WORK_TITLE, WORK_SET, WORK_KG, WORK_RAP, WORK_DATE)" +
-                        " VALUES ( " + title + set + kg + rap + "DATETIME('NOW','+9 HOURS') )"
-        );
+
+        for (String key : workMap.keySet()) {
+            String title = key;
+            WorkOutItem items = workMap.get(key);
+            ArrayList kgList = items.getKgList();
+            ArrayList repList = items.getRepList();
+            for (int j = 0; j < kgList.size(); j++) {
+                String workKg = kgList.get(j).toString();
+                String workRep = repList.get(j).toString();
+                String set = Integer.toString(j + 1);
+
+                db.execSQL(
+                        "INSERT OR REPLACE INTO WORK_LOG (WORK_TITLE, WORK_SET, WORK_KG, WORK_RAP)" +
+                                " VALUES ( '" + title + "', '" + set + "', '" + workKg + "', '" + workRep + "' )"
+                );
+
+            }
+        }
         db.close();
     }
 //
@@ -57,27 +74,35 @@ public class WorkOutDatabase extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
-    public List<WorkOutItem> getWorkLog() {
+    public HashMap<String, String> getWorkLog(String date) {
         SQLiteDatabase db = getReadableDatabase();
-        List<WorkOutItem> datas = new ArrayList<>();
+
+        ArrayList<String> titleList = new ArrayList<>();
+        ArrayList<String> kgList = new ArrayList<>();
+        ArrayList<String> repList = new ArrayList<>();
+        HashMap<String, String> logData = new HashMap<>();
 
         Cursor cursor = db.rawQuery(
-                "SELECT * FROM WORK_LOG"
+                "SELECT * FROM WORK_LOG " +
+                        "where WORK_DATE = '" + date + "';"
                 , null);
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
-                WorkOutItem item = new WorkOutItem();
-                item.setTitle(cursor.getString(cursor.getColumnIndex("WORK_TITLE")));
-                item.setSet(cursor.getString(cursor.getColumnIndex("WORK_SET")));
-                item.setKilogram(cursor.getString(cursor.getColumnIndex("WORK_KG")));
-                item.setRep(cursor.getString(cursor.getColumnIndex("WORK_RAP")));
-                item.setDate(cursor.getString(cursor.getColumnIndex("WORK_DATE")));
 
-                datas.add(item);
+                titleList.add(cursor.getString(cursor.getColumnIndex("WORK_TITLE")));
+                kgList.add(cursor.getString(cursor.getColumnIndex("WORK_KG")));
+                repList.add(cursor.getString(cursor.getColumnIndex("WORK_RAP")));
+
             } while (cursor.moveToNext());
         }
         db.close();
-        return datas;
-    }
 
+        for (String title : titleList) {
+            for (int i = 0; i < 5; i++) {
+                logData.put(title, kgList.get(i));
+                logData.put(title, repList.get(i));
+            }
+        }
+        return logData;
+    }
 }
