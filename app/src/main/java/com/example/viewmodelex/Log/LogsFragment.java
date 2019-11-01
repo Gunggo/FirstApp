@@ -36,7 +36,7 @@ public class LogsFragment extends Fragment {
     private RecyclerView recyclerView;
     private LogAdapter adapter;
     private WorkOutDatabase workOutDatabase;
-    private HashMap<String, ArrayList<WorkOutItem>> logData;
+    private HashMap<String, WorkOutItem> logData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +58,7 @@ public class LogsFragment extends Fragment {
                 recyclerView.setLayoutManager(linearLayoutManager1);
 
                 workOutDatabase = new WorkOutDatabase(getContext());
-                adapter = new WorkOutAdapter(logData, getContext());
+                adapter = new LogAdapter(logData, getContext());
                 recyclerView.setAdapter(adapter);
             }
         });

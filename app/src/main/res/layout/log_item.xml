@@ -15,7 +15,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
@@ -23,5 +22,215 @@
         android:textColor="@color/grayText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSet6"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="1"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/workOutDate" />
+
+    <EditText
+        android:id="@+id/etLogKg1"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogKg2"
+        app:layout_constraintStart_toEndOf="@+id/etSet6" />
+
+    <EditText
+        android:id="@+id/etLogRep1"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogRep2"
+        app:layout_constraintStart_toEndOf="@+id/etLogKg1" />
+
+    <EditText
+        android:id="@+id/etSet7"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="2"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet6" />
+
+    <EditText
+        android:id="@+id/etLogKg2"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogKg3"
+        app:layout_constraintStart_toEndOf="@+id/etSet7" />
+
+    <EditText
+        android:id="@+id/etLogRep2"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogRep3"
+        app:layout_constraintStart_toEndOf="@+id/etLogKg2" />
+
+    <EditText
+        android:id="@+id/etSet8"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="3"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet7" />
+
+    <EditText
+        android:id="@+id/etLogKg3"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="9dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogKg4"
+        app:layout_constraintStart_toEndOf="@+id/etSet8" />
+
+    <EditText
+        android:id="@+id/etLogRep3"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="9dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogRep4"
+        app:layout_constraintStart_toEndOf="@+id/etLogKg3" />
+
+    <EditText
+        android:id="@+id/etSet9"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="4"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet8" />
+
+    <EditText
+        android:id="@+id/etLogKg4"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogKg5"
+        app:layout_constraintStart_toEndOf="@+id/etSet9" />
+
+    <EditText
+        android:id="@+id/etLogRep4"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/etLogRep5"
+        app:layout_constraintStart_toEndOf="@+id/etLogKg4" />
+
+    <EditText
+        android:id="@+id/etSet10"
+        style="@style/WorkOutRowText"
+        android:layout_width="26dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="5"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSet9" />
+
+    <EditText
+        android:id="@+id/etLogKg5"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etSet10" />
+
+    <EditText
+        android:id="@+id/etLogRep5"
+        style="@style/WorkOutRowText"
+        android:layout_width="32dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/search_bar"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etLogKg5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

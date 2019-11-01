@@ -1,12 +1,9 @@
 package com.example.viewmodelex.Log;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,16 +14,15 @@ import com.example.viewmodelex.WorkOut.WorkOutItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class LogAdapter extends RecyclerView.Adapter<LogAdapter.Holder>{
     public static final String TAG = "lecture";
 
-    private HashMap<String, ArrayList<WorkOutItem>> mapData;
+    private HashMap<String, WorkOutItem> logData;
     Context context;
 
-    public LogAdapter(HashMap<String, ArrayList<WorkOutItem>> mapData, Context context) {
-        this.mapData = mapData;
+    public LogAdapter(HashMap<String, WorkOutItem> logData, Context context) {
+        this.logData = logData;
         this.context = context;
     }
 
@@ -43,25 +39,42 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.Holder>{
     @Override
     public void onBindViewHolder(@NonNull LogAdapter.Holder viewholder, int position) {
 
-        viewholder.workOutDate.setText(mList.get(position).getExerName());
-
-        viewholder.etLogKg1.setText(mList.get(position).getCategory());
-        viewholder.etLogKg2.setText(mList.get(position).getCategory());
-        viewholder.etLogKg3.setText(mList.get(position).getCategory());
-        viewholder.etLogKg4.setText(mList.get(position).getCategory());
-        viewholder.etLogKg5.setText(mList.get(position).getCategory());
-
-        viewholder.etLogRep1.setText(mList.get(position).getCategory());
-        viewholder.etLogRep2.setText(mList.get(position).getCategory());
-        viewholder.etLogRep3.setText(mList.get(position).getCategory());
-        viewholder.etLogRep4.setText(mList.get(position).getCategory());
-        viewholder.etLogRep5.setText(mList.get(position).getCategory());
+//        // 키 하나에 리스트 두개씩.
+//
+//        for (String key : logData.keySet()) {
+//            ArrayList<String> kgList = new ArrayList<>();
+//            ArrayList<String> repList = new ArrayList<>();
+//            ArrayList<ArrayList<String>> data = new ArrayList<>();
+//
+//            String title = key;
+//            data = logData.get(title);
+//            for (int j = 0; j < kgList.size(); j++) {
+//                String workKg = kgList.get(j).toString();
+//                String workRep = repList.get(j).toString();
+//                String set = Integer.toString(j + 1);
+//
+//            }
+//        }
+//
+//        viewholder.workOutDate.setText(mList.get(position).getExerName());
+//
+//        viewholder.etLogKg1.setText(mList.get(position).getCategory());
+//        viewholder.etLogKg2.setText(mList.get(position).getCategory());
+//        viewholder.etLogKg3.setText(mList.get(position).getCategory());
+//        viewholder.etLogKg4.setText(mList.get(position).getCategory());
+//        viewholder.etLogKg5.setText(mList.get(position).getCategory());
+//
+//        viewholder.etLogRep1.setText(mList.get(position).getCategory());
+//        viewholder.etLogRep2.setText(mList.get(position).getCategory());
+//        viewholder.etLogRep3.setText(mList.get(position).getCategory());
+//        viewholder.etLogRep4.setText(mList.get(position).getCategory());
+//        viewholder.etLogRep5.setText(mList.get(position).getCategory());
 
     }
 
     @Override
     public int getItemCount() {
-        return this.mapData.size();
+        return this.logData.size();
     }
 
 

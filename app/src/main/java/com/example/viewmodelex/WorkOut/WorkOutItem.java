@@ -22,6 +22,14 @@ public class WorkOutItem {
         repList = new ArrayList<>();
     }
 
+    public void setKgList(ArrayList<String> kgList) {
+        this.kgList = kgList;
+    }
+
+    public void setRepList(ArrayList<String> repList) {
+        this.repList = repList;
+    }
+
     public ArrayList<String> getKgList() {
         return kgList;
     }

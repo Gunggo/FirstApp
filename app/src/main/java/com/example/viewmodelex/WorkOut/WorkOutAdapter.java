@@ -17,13 +17,16 @@ import java.util.HashMap;
 public class WorkOutAdapter extends RecyclerView.Adapter<WorkOutAdapter.Holder> {
 
     public static final String TAG = "lecture";
-    private ArrayList<WorkOutItem> workList;
+    private ArrayList<String> titleList;
     private HashMap<String, WorkOutItem> mapData;
+    private ArrayList<WorkOutItem> workData;
+    private ArrayList<Holder> holderList;
     private Context context;
 
-    public WorkOutAdapter(HashMap<String, WorkOutItem> mapData, Context context) {
-        this.mapData = mapData;
+    public WorkOutAdapter(ArrayList<String> mapList, Context context) {
+        this.titleList = mapList;
         this.context = context;
+        holderList = new ArrayList<>();
     }
 
     @Override
@@ -31,18 +34,44 @@ public class WorkOutAdapter extends RecyclerView.Adapter<WorkOutAdapter.Holder> 
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.workout_add, viewGroup, false);
         final Holder viewHolder = new Holder(view);
+        holderList.add(viewHolder);
 
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final Holder viewholder, int position) {
-
+        viewholder.etTitle.setText(titleList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return this.mapData.size();
+        return this.titleList.size();
+    }
+
+    public HashMap<String, WorkOutItem> getMapData() {
+        mapData = new HashMap<>();
+        workData = new ArrayList<>();
+
+        for (int i = 0; i < titleList.size(); i++) {
+            WorkOutItem workOutItem = new WorkOutItem();
+            workOutItem.addKgList(holderList.get(i).etKg1.getText().toString());
+            workOutItem.addKgList(holderList.get(i).etKg2.getText().toString());
+            workOutItem.addKgList(holderList.get(i).etKg3.getText().toString());
+            workOutItem.addKgList(holderList.get(i).etKg4.getText().toString());
+            workOutItem.addKgList(holderList.get(i).etKg5.getText().toString());
+
+            workOutItem.addRepList(holderList.get(i).etRep1.getText().toString());
+            workOutItem.addRepList(holderList.get(i).etRep2.getText().toString());
+            workOutItem.addRepList(holderList.get(i).etRep3.getText().toString());
+            workOutItem.addRepList(holderList.get(i).etRep4.getText().toString());
+            workOutItem.addRepList(holderList.get(i).etRep5.getText().toString());
+
+            mapData.put(titleList.get(i),workOutItem);
+        }
+
+        return mapData;
+
     }
 
 

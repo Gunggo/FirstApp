@@ -5,12 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.viewmodelex.WorkOut.WorkOutItem;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 public class WorkOutDatabase extends SQLiteOpenHelper {
 
@@ -74,13 +70,13 @@ public class WorkOutDatabase extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
-    public HashMap<String, String> getWorkLog(String date) {
+    public HashMap<String, WorkOutItem> getWorkLog(String date) {
         SQLiteDatabase db = getReadableDatabase();
 
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<String> kgList = new ArrayList<>();
         ArrayList<String> repList = new ArrayList<>();
-        HashMap<String, String> logData = new HashMap<>();
+        HashMap<String, WorkOutItem> logData = new HashMap<>();
 
         Cursor cursor = db.rawQuery(
                 "SELECT * FROM WORK_LOG " +
@@ -88,7 +84,6 @@ public class WorkOutDatabase extends SQLiteOpenHelper {
                 , null);
         if (cursor.moveToFirst()) {
             do {
-
                 titleList.add(cursor.getString(cursor.getColumnIndex("WORK_TITLE")));
                 kgList.add(cursor.getString(cursor.getColumnIndex("WORK_KG")));
                 repList.add(cursor.getString(cursor.getColumnIndex("WORK_RAP")));
@@ -97,12 +92,31 @@ public class WorkOutDatabase extends SQLiteOpenHelper {
         }
         db.close();
 
-        for (String title : titleList) {
-            for (int i = 0; i < 5; i++) {
-                logData.put(title, kgList.get(i));
-                logData.put(title, repList.get(i));
-            }
-        }
+//        for (String title : titleList) {
+//            logData.put(title, kgList);
+//            logData.put(title, repList);
+//        }
+//        mapData = new HashMap<>();
+//        workData = new ArrayList<>();
+//
+//        for (int i = 0; i < titleList.size(); i++) {
+//            WorkOutItem workOutItem = new WorkOutItem();
+//            workOutItem.addKgList(holderList.get(i).etKg1.getText().toString());
+//            workOutItem.addKgList(holderList.get(i).etKg2.getText().toString());
+//            workOutItem.addKgList(holderList.get(i).etKg3.getText().toString());
+//            workOutItem.addKgList(holderList.get(i).etKg4.getText().toString());
+//            workOutItem.addKgList(holderList.get(i).etKg5.getText().toString());
+//
+//            workOutItem.addRepList(holderList.get(i).etRep1.getText().toString());
+//            workOutItem.addRepList(holderList.get(i).etRep2.getText().toString());
+//            workOutItem.addRepList(holderList.get(i).etRep3.getText().toString());
+//            workOutItem.addRepList(holderList.get(i).etRep4.getText().toString());
+//            workOutItem.addRepList(holderList.get(i).etRep5.getText().toString());
+//
+//            mapData.put(titleList.get(i),workOutItem);
+//        }
+//
+//        return mapData;
         return logData;
     }
 }
